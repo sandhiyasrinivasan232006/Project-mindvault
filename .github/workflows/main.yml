@@ -1,0 +1,42 @@
+name: MindvaultAI CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint --if-present
+
+      - name: Run Tests
+        run: npm test
+
+      - name: Build Application
+        run: npm run build
+
+      - name: Workflow Summary
+        run: |
+          echo "## MindvaultAI CI Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository checkout completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Dependencies installed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- Lint checks completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Tests executed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- Build completed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- All executed checks passed" >> $GITHUB_STEP_SUMMARY
