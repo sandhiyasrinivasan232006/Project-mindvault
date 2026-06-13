@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --background: #090d16;
+  --foreground: #f8fafc;
+  
+  --emotional-purple: #7b61ff;
+  --emotional-purple-glow: rgba(123, 97, 255, 0.4);
+  --calm-blue: #4facfe;
+  --calm-blue-glow: rgba(79, 172, 254, 0.4);
+  --healing-cyan: #00c9ff;
+  --healing-cyan-glow: rgba(0, 201, 255, 0.4);
+  --recovery-green: #43e97b;
+  --recovery-green-glow: rgba(67, 233, 123, 0.4);
+  --sunset-coral: #ff758c;
+  --sunset-coral-glow: rgba(255, 117, 140, 0.4);
+  --warm-gold: #f6d365;
+  --warm-gold-glow: rgba(246, 211, 101, 0.4);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  
+  --color-purple-primary: var(--emotional-purple);
+  --color-blue-primary: var(--calm-blue);
+  --color-cyan-primary: var(--healing-cyan);
+  --color-green-primary: var(--recovery-green);
+  --color-coral-primary: var(--sunset-coral);
+  --color-gold-primary: var(--warm-gold);
+}
+
+/* Custom Reset and Scrollbars */
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--emotional-purple);
+  outline: none;
+  box-shadow: 0 0 15px var(--emotional-purple-glow);
+}
+
+/* Elegant custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 97, 255, 0.5);
+}
+
+/* Ambient Moving Blobs */
+.ambient-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity, filter;
+}
+
+/* Sleek Neon Text & Border Glows */
+.text-glow-purple {
+  text-shadow: 0 0 10px rgba(123, 97, 255, 0.5);
+}
+.text-glow-blue {
+  text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+}
+.text-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 201, 255, 0.5);
+}
+.text-glow-green {
+  text-shadow: 0 0 10px rgba(67, 233, 123, 0.5);
+}
+
+.border-glow-purple:focus-within, .border-glow-purple:hover {
+  box-shadow: 0 0 15px rgba(123, 97, 255, 0.25);
+  border-color: rgba(123, 97, 255, 0.5);
+}
+
+/* Pulsing Guided breathing animations */
+@keyframes breathIn {
+  0% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.3)); }
+  50% { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 35px rgba(0, 201, 255, 0.7)); }
+  100% { transform: scale(0.9); opacity: 0.6; filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.3)); }
+}
+
+.breathing-orb {
+  animation: breathIn 8s ease-in-out infinite;
+}
+
+/* Keyframe animations for sleek drift gradients */
+@keyframes drift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-drift {
+  background-size: 200% 200%;
+  animation: drift 15s ease infinite;
+}
+
+/* Hide animations if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .breathing-orb {
+    animation: none !important;
+  }
+}
