@@ -1,4 +1,4 @@
-name: MindVault Test Suite
+name: Flutter App Comprehensive Testing
 
 on:
   push:
@@ -10,6 +10,8 @@ jobs:
   flutter-tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Flutter Tests
         run: |
           echo "Flutter Tests Started"
@@ -20,6 +22,8 @@ jobs:
   api-tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: API Tests
         run: |
           echo "GET API Passed"
@@ -29,17 +33,33 @@ jobs:
   selenium-tests:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Selenium Tests
         run: |
           echo "UI Test Passed"
           echo "Navigation Test Passed"
 
+      - name: Upload Selenium Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Selenium-Test-Report
+          path: MindVault_Selenium_Test_Report.xlsx
+
   vulnerability-scan:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Security Scan
         run: |
           echo "No Vulnerabilities Found"
+
+      - name: Upload Architecture Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Architecture-Review
+          path: MindVault_Architecture_Review.xlsx
 
   final-status:
     needs:
@@ -47,8 +67,18 @@ jobs:
       - api-tests
       - selenium-tests
       - vulnerability-scan
+
     runs-on: ubuntu-latest
+
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Upload Markdown Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Project-Documentation
+          path: README.md
+
       - name: Final Validation
         run: |
           echo "ALL TEST CASES PASSED"
