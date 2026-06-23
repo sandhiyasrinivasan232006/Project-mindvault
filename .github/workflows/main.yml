@@ -1,41 +1,43 @@
 name: MindVault AI CI Pipeline
 
 on:
-push:
-branches:
-- main
-pull_request:
-branches:
-- main
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-build:
-runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout Repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v4
-    with:
-      node-version: 20
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.0"
 
-  - name: Install Dependencies
-    run: npm install
+      - name: Install Dependencies
+        run: flutter pub get
 
-  - name: Run Tests (if available)
-    run: npm test -- --passWithNoTests || true
+      - name: Analyze Code
+        run: flutter analyze
 
-  - name: Build Application
-    run: npm run build
+      - name: Run Unit Tests
+        run: flutter test --coverage
 
-  - name: Workflow Summary
-    run: |
-      echo "# 🧠 MindVault AI Report" >> $GITHUB_STEP_SUMMARY
-      echo "✅ Repository Checked Out" >> $GITHUB_STEP_SUMMARY
-      echo "✅ Dependencies Installed" >> $GITHUB_STEP_SUMMARY
-      echo "✅ Build Completed" >> $GITHUB_STEP_SUMMARY
-      echo "🚀 MindVault AI Pipeline Finished" >> $GITHUB_STEP_SUMMARY
-```
+      - name: Generate Test Report
+        run: |
+          echo "# MindVault AI Test Summary" > TEST_REPORT.md
+          echo "" >> TEST_REPORT.md
+          echo "✅ Flutter Analysis Passed" >> TEST_REPORT.md
+          echo "✅ Unit Tests Passed" >> TEST_REPORT.md
+          echo "✅ Coverage Generated" >> TEST_REPORT.md
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: MindVault-Test-Report
+          path: TEST_REPORT.md
