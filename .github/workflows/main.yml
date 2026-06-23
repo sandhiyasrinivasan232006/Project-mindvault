@@ -129,7 +129,7 @@ jobs:
         run: |
           EXEC_DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           
-          echo "=========================================================" >> $GITHUB_STEP_SUMMARY
+          echo >> $GITHUB_STEP_SUMMARY
           echo "### MINDVAULT AI TEST EXECUTION SUMMARY" >> $GITHUB_STEP_SUMMARY
           echo "**Project Name:** MindVault AI" >> $GITHUB_STEP_SUMMARY
           echo "**Execution Date:** $EXEC_DATE" >> $GITHUB_STEP_SUMMARY
